@@ -1,11 +1,9 @@
 body {
-    background-color: #F5F5F5;
+    background-color: #F2F2F2;
   }
 
-  p.courier-new {
+  .courier-new {
     font-family: 'Prompt', sans-serif;
-    font-size: 60px;
-    color: #ffffff;
   }
 
   .header {
@@ -31,5 +29,41 @@ body {
   #googleMap{
     width:100%;
     height:500px;
-    border-radius: 5px
+    border-radius: 5px;
+  }
+  #result {
+    margin-top: 10px; 
+    padding: 10px; 
+    border-radius: 5px;
+    background-color: #EBFEF3;
+  }
+  .result-parent{
+    font-size: 20px;
+    position: relative;
+  }
+  .result-icon{
+    height: 22px;
+    width: 22px;
+    margin-top: -5px;
+  }
+  .result-rate{
+    color: white;
+    position: absolute;
+    top:0;
+    right: 0;
+    font-size: 15px;
+    margin-top: 6px;
+    background-color: red;
+    border-radius: 5px;
+    padding: 2px 4px 2px 4px;
+  }
+  .result-rate-point{
+    font-size: 15px;
+  }
+  .result-location{
+    color: #5F5F5F;
+    margin-left: 3px;
+  }
+  .result-vicinity{
+    font-size: 15px;
   }

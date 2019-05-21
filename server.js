@@ -25,7 +25,7 @@ function searchPlace(req, res) {
         params: {
             input: `${input} Thailand`,
             inputtype: 'textquery',
-            fields: 'formatted_address,name,rating,geometry',
+            fields: 'geometry',
             key: 'AIzaSyC1eRY8gOTMX97MLzHZuSrR5Dc8ZFTHBG4'
         },
         responseType: 'json'
@@ -33,8 +33,8 @@ function searchPlace(req, res) {
         .then(function (response) {
             let lat = response.data.candidates[0].geometry.location.lat
             let lng = response.data.candidates[0].geometry.location.lng
-            console.log('lat:', lat)
-            console.log('lng', lng)
+            console.log('lat :', lat)
+            console.log('lng :', lng)
             axios({
                 method: 'get',
                 url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?',
@@ -48,7 +48,7 @@ function searchPlace(req, res) {
             })
                 .then(function (result) {
                     var finalData = result.data.results
-                    console.log(finalData)
+                    //console.log(finalData)
                     res.json(finalData)
                 })
         });

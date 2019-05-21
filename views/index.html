@@ -18,11 +18,11 @@
 
 </head>
 
-<body>
+<body onLoad="search()">
 
   <div class="header py-5">
     <div class="container">
-      <p class="courier-new text">ค้นหาร้านอาหารในประเทศไทย</p>
+      <p class="courier-new text" style="font-size:60px;color:#ffffff">ค้นหาร้านอาหารในประเทศไทย</p>
       <div class="row justify-content-md-center">
         <div class="col-10 col-md-8 col-lg-6">
           <input type="text" id="inputLocation" class="form-control" placeholder="Please enter the location" value="">
@@ -36,36 +36,21 @@
 
   <div class="container">
     <div class="row justify-content-around">
-      <div id="googleMap" class="col-12 col-lg-7 mt-3"></div>
-      <div class="col-12 col-lg-4" style="margin-top: 10px;">
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
-        <div style="border: 1px solid black; margin-top: 10px; padding: 10px; border-radius: 5px">
-          test
-        </div>
+      <div id="googleMap" class="col-12 col-lg-6 mt-3"></div>
+
+      <div id="results" class="col-12 col-lg-5" style="margin-top: 10px;">
+
+        <!-- <div id="result">
+          <div class="courier-new result-parent"><img class="result-icon"
+              src="https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png" /> ครัวลุงแดง
+            <span class="result-rate">&#x2605 <span class="result-rate-point">5.5</span></span></div>
+          <div class="result-location"><i class="fas fa-map-marked-alt"></i>
+            <span>166/42 Pracha Rat Sai 2 Road, Bang Sue</span>
+          </div>
+        </div> -->
+
       </div>
+
     </div>
   </div>
 
@@ -95,7 +80,7 @@
     })
 
     function search() {
-      var input = $("#inputLocation").val()
+      var input = $("#inputLocation").val() || 'Bang sue'
       console.log('input : ', input)
       $.ajax({
         url: "http://localhost:8081/search",
@@ -103,13 +88,32 @@
         data: { input },
         success: function (res) {
           console.log(res)
-          alert('okay');
+          showResults(res)
         },
         error: function (error) {
           alert('error');
           console.log(error)
         }
       });
+    }
+
+    function showResults(results) {
+      $("#results").empty()
+      for (var i in results) {
+        var rating = results[i].rating
+        if (rating == undefined) rating = 'None'
+        if (results[i].rating % 1 == 0) rating = results[i].rating + '.0'
+        if (i > 5) break
+        $("#results").append(`<div id="result">
+          <div class="courier-new result-parent"><img class="result-icon"
+              src="${results[i].icon}" /> ${results[i].name}
+            <span class="result-rate">&#x2605 <span class="result-rate-point">${rating}</span></span></div>
+          <div class="result-location"><i class="fas fa-map-marked-alt"></i>
+            <span class="result-vicinity"> ${results[i].vicinity}</span>
+          </div>
+        </div>`);
+
+      }
     }
 
     function myMap() {

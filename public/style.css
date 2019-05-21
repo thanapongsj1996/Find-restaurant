@@ -67,3 +67,12 @@ body {
   .result-vicinity{
     font-size: 15px;
   }
+  .footer{
+    background:rgba(0, 0, 0, 0.85);
+    color: #D8D8D8;
+    font-size: 0.9rem;
+    height: min-content;
+    line-height: 60px;
+    text-align: center;
+    margin-top: 50px;
+}

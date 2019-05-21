@@ -22,7 +22,7 @@
 
   <div class="header py-5">
     <div class="container">
-      <p class="courier-new text">ค้นหาร้านอาหารในกรุงเทพฯ</p>
+      <p class="courier-new text">ค้นหาร้านอาหารในประเทศไทย</p>
       <div class="row justify-content-md-center">
         <div class="col-10 col-md-8 col-lg-6">
           <input type="text" id="inputLocation" class="form-control" placeholder="Please enter the location" value="">
@@ -96,12 +96,14 @@
 
     function search() {
       var input = $("#inputLocation").val()
+      console.log('input : ', input)
       $.ajax({
         url: "http://localhost:8081/search",
         type: 'get',
+        data: { input },
         success: function (res) {
-          console.log(res);
-          alert(res);
+          console.log(res)
+          alert('okay');
         },
         error: function (error) {
           alert('error');

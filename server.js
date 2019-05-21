@@ -41,13 +41,17 @@ function searchPlace(req, res) {
                 params: {
                     location: `${lat},${lng}`,
                     type: 'restaurant',
-                    radius: '2000',
+                    radius: '1500',
                     key: 'AIzaSyC1eRY8gOTMX97MLzHZuSrR5Dc8ZFTHBG4'
                 },
                 responseType: 'json'
             })
                 .then(function (result) {
-                    var finalData = result.data.results
+                    var finalData = {
+                        data: result.data.results,
+                        lat: lat,
+                        lng: lng
+                    }
                     //console.log(finalData)
                     res.json(finalData)
                 })

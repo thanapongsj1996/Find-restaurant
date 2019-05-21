@@ -97,30 +97,46 @@
       });
     }
 
-    function showResults(results) {
+    function showResults(data) {
       $("#results").empty()
+      var results = data.data
       for (var i in results) {
         var rating = results[i].rating
         if (rating == undefined) rating = 'None'
-        if (results[i].rating % 1 == 0) rating = results[i].rating + '.0'
+        if (rating % 1 == 0) rating = rating + '.0'
         if (i > 5) break
         $("#results").append(`<div id="result">
-          <div class="courier-new result-parent"><img class="result-icon"
-              src="${results[i].icon}" /> ${results[i].name}
+          <div class="courier-new result-parent"><img class="result-icon" src="${results[i].icon}" /> ${results[i].name}
             <span class="result-rate">&#x2605 <span class="result-rate-point">${rating}</span></span></div>
           <div class="result-location"><i class="fas fa-map-marked-alt"></i>
             <span class="result-vicinity"> ${results[i].vicinity}</span>
           </div>
         </div>`);
-
       }
+      myMap(data)
     }
 
-    function myMap() {
-      var mapProp = {
-        center: new google.maps.LatLng(13.8206972, 100.5239867),
+    function myMap(data) {
+      latInput = Number(data.lat)
+      lgnInput = Number(data.lng)
+      var results = data.data
+
+      var myCenter = { lat: latInput || 13.8206972, lng: lgnInput || 100.5239867 }
+      var map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: 15,
-      };
+        center: myCenter
+      })
+
+      for (var i in results) {
+        if (i > 5) break
+        var lat = results[i].geometry.location.lat
+        var lng = results[i].geometry.location.lng
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(lat, lng),
+          icon: `http://maps.google.com/mapfiles/kml/paddle/${i}-lv.png`,
+          map: map
+        })
+      }
       var map = new google.maps.Map(document.getElementById("googleMap"), mapProp)
     }
   </script>

@@ -1,0 +1,35 @@
+body {
+    background-color: #F5F5F5;
+  }
+
+  p.courier-new {
+    font-family: 'Prompt', sans-serif;
+    font-size: 60px;
+    color: #ffffff;
+  }
+
+  .header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url("https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80");
+    background-position: center;
+    background-size: cover;
+  }
+
+  .text {
+    text-align: center;
+  }
+
+  .row{
+    margin-left: 0px;margin-right: 0px;
+  }
+
+  #searchLocation{
+    background-color: #AB0B3C;
+  }
+  .fa-search{
+    color: #EEF7F7;
+  }
+  #googleMap{
+    width:100%;
+    height:500px;
+    border-radius: 5px
+  }

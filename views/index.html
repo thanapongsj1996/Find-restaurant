@@ -19,10 +19,10 @@
 </head>
 
 <body onLoad="search()">
-
+  <!-- HEADER -->
   <div class="header py-5">
     <div class="container">
-      <p class="courier-new text" style="font-size:60px;color:#ffffff">ค้นหาร้านอาหารในประเทศไทย</p>
+      <p class="courier-new text">ค้นหาร้านอาหารในประเทศไทย</p>
       <div class="row justify-content-md-center">
         <div class="col-10 col-md-8 col-lg-6">
           <input type="text" id="inputLocation" class="form-control" placeholder="Please enter the location" value="">
@@ -34,27 +34,17 @@
 
   <div class="container">
     <div class="row justify-content-around">
+      <!-- GOOGLE MAP -->
       <div id="googleMap" class="col-12 col-lg-6 mt-3"></div>
-
-      <div id="results" class="col-12 col-lg-5" style="margin-top: 10px;">
-
-        <!-- <div id="result">
-          <div class="courier-new result-parent"><img class="result-icon"
-              src="https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png" /> ครัวลุงแดง
-            <span class="result-rate">&#x2605 <span class="result-rate-point">5.5</span></span></div>
-          <div class="result-location"><i class="fas fa-map-marked-alt"></i>
-            <span>166/42 Pracha Rat Sai 2 Road, Bang Sue</span>
-          </div>
-        </div> -->
-
-      </div>
-
+      <!-- SEARCH RESULTS -->
+      <div id="results" class="col-12 col-lg-5" style="margin-top: 10px;"></div>
     </div>
   </div>
 
+  <!-- FOOTER -->
   <footer class="footer">
-      <span>COPYRIGHT &copy; 2019</span>
-      <span>All Rights Reserved. Website by Thanapong Somjai
+    <span>COPYRIGHT &copy; 2019</span>
+    <span>All Rights Reserved. Website by Thanapong Somjai
   </footer>
 
 
@@ -73,13 +63,14 @@
     crossorigin="anonymous"></script>
 
   <script>
+    // Press Enter to search
     $(document).ready(function () {
       $('#inputLocation').keypress(function (e) {
         if (e.keyCode == 13)
           search()
       })
     })
-
+    // Search function HTTP request to server
     function search() {
       var input = $("#inputLocation").val() || 'Bang sue'
       console.log('input : ', input)
@@ -88,7 +79,6 @@
         type: 'get',
         data: { input },
         success: function (res) {
-          console.log(res)
           showResults(res)
         },
         error: function (error) {
@@ -97,37 +87,44 @@
         }
       });
     }
-
+    // Show results from searching
     function showResults(data) {
-      $("#results").empty()
+      $('#results').empty() // Clear previous results
       var results = data.data
       for (var i in results) {
         var rating = results[i].rating
-        if (rating == undefined) rating = 'None'
+        var hidden = ''
+        var ratingColor = 'red'
+        if (rating == undefined) hidden = 'hidden'
         if (rating % 1 == 0) rating = rating + '.0'
+        if (rating < 1) ratingColor = '#805A5A'
+        else if (rating < 2) ratingColor = '#BA8A8A'
+        else if (rating < 3) ratingColor = '#E88181'
+        else if (rating < 4) ratingColor = '#EA4F4F'
         if (i > 5) break
-        $("#results").append(`<div id="result">
-          <div class="courier-new result-parent"><img class="result-icon" src="${results[i].icon}" /> ${results[i].name}
-            <span class="result-rate">&#x2605 <span class="result-rate-point">${rating}</span></span></div>
-          <div class="result-location"><i class="fas fa-map-marked-alt"></i>
-            <span class="result-vicinity"> ${results[i].vicinity}</span>
+        $('#results').append(`<div id='result'>
+          <div class='courier-new result-parent'><img class='result-icon' src='${results[i].icon}' /> ${results[i].name}
+            <span class='result-rate' style='background-color: ${ratingColor};' ${hidden}>&#x2605 <span class='result-rate-point'>${rating}</span></span>
+          </div>
+          <div class='result-location'><i class='fas fa-map-marked-alt'></i>
+            <span class='result-vicinity'> ${results[i].vicinity}</span>
           </div>
         </div>`);
       }
-      myMap(data)
+      myMap(data) // Map drawing
     }
-
+    //Draw the map
     function myMap(data) {
       latInput = Number(data.lat)
       lgnInput = Number(data.lng)
       var results = data.data
-
+      // Map and its center
       var myCenter = { lat: latInput || 13.8206972, lng: lgnInput || 100.5239867 }
       var map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: 15,
         center: myCenter
       })
-
+      // Mark result's location
       for (var i in results) {
         if (i > 5) break
         var lat = results[i].geometry.location.lat

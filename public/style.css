@@ -14,6 +14,8 @@ body {
 
   .text {
     text-align: center;
+    font-size:60px;
+    color:#ffffff;
   }
 
   .row{
@@ -53,7 +55,6 @@ body {
     right: 0;
     font-size: 15px;
     margin-top: 6px;
-    background-color: red;
     border-radius: 5px;
     padding: 2px 4px 2px 4px;
   }
@@ -68,7 +69,7 @@ body {
     font-size: 15px;
   }
   .footer{
-    background:rgba(0, 0, 0, 0.85);
+    background:rgb(37, 37, 37);
     color: #D8D8D8;
     font-size: 0.9rem;
     height: min-content;

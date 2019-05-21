@@ -19,6 +19,7 @@ function showIndex(req, res) {
 
 function searchPlace(req, res) {
     let { input } = req.query
+    // Find the location of input
     axios({
         method: 'get',
         url: 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?',
@@ -35,6 +36,7 @@ function searchPlace(req, res) {
             let lng = response.data.candidates[0].geometry.location.lng
             console.log('lat :', lat)
             console.log('lng :', lng)
+            // Find the nearby location
             axios({
                 method: 'get',
                 url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?',
@@ -52,7 +54,7 @@ function searchPlace(req, res) {
                         lat: lat,
                         lng: lng
                     }
-                    //console.log(finalData)
+                    // Send data to client side
                     res.json(finalData)
                 })
         });
